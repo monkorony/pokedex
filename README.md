@@ -1,8 +1,10 @@
 # GraphQL Pokemon API
+https://pokeapi.co/docs/v2.html
 
-###npm install
-
-Install Dependencies
+**Install Dependencies:**
+```
+npm install
+```
 
 **Start Server:**
 ```
