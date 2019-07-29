@@ -20,3 +20,12 @@ li {
   color: #fff;
   padding: 0 5px;
 }
+.new {
+  list-style: unset;
+  padding-left: 40px; 
+}
+.new li {
+  color: black;
+  float: none;
+  
+}

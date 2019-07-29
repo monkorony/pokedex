@@ -1,6 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { capitalizeFirstLetter, lpad } from '../../services/pokemonService'
 import axios from 'axios';
+
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
+
+
+const POKEMON_QUERY = gql`
+query PokemonQuery($id: Int!) {
+  getPokemonById(id: $id) {
+    id
+    name
+    height
+    is_default
+    order
+    weight
+    abilities {
+      slot
+      is_hidden
+      ability {
+        name
+        url
+      }
+    }
+    
+    location_area_encounters
+    
+  }
+}
+`;
 
 export default class Pokemon extends Component {
   state = {
@@ -28,8 +56,7 @@ export default class Pokemon extends Component {
   }
 
   async componentDidMount() {
-    const { pokemonIndex } = this.props.match.params;
-
+    let { pokemonIndex } = this.props.match.params;
     //Urls for pokemon informaion
     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
     const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}`
@@ -150,6 +177,8 @@ export default class Pokemon extends Component {
 
   }
   render() {
+    let { pokemonIndex } = this.props.match.params;
+    pokemonIndex = parseInt(pokemonIndex);
     const {
       name,
       abilities,
@@ -166,8 +195,20 @@ export default class Pokemon extends Component {
       catchRate,
       eggGroups,
       hatchSteps } = this.state;
+
     return (
+
       <div className="container">
+        <Query query={POKEMON_QUERY} variables={{ pokemonIndex }}>
+          {
+            ({ loading, error, data }) => {
+              if (loading) return <p>Loading...</p>
+              if (error) console.log(error);
+              console.log(data)
+              return data;
+            }
+          }
+        </Query>
         <div className="row">
           <div className="col-md-12">
             <div className="col">
@@ -364,6 +405,9 @@ export default class Pokemon extends Component {
           </div>
         </div>
       </div>
+
+
+
 
 
     )

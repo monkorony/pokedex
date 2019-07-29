@@ -1,16 +1,15 @@
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
 const cors = require('cors');
-const schema = require('./schema');
+const server = require('./schema');
 const app = express();
 
 //allow crossorigin
 app.use(cors())
 
-app.use('/graphql', graphqlHTTP({
-  schema,
-  graphiql: true
-}));
+server.applyMiddleware({
+  app
+})
 
 app.use(express.static('public'));
 

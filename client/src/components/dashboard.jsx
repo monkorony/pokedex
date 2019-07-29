@@ -4,7 +4,21 @@ import pokemonGroup from './pokemon/pokemonGroup.png';
 import PokeList from './pokemon/pokeList';
 import PokeSearchInput from './pokemon/pokeSearch';
 
+//
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
 
+
+const POKEMONS_QUERY = gql`
+query PokemonsQuery {
+  getAllPokemon {
+    results {
+      name
+      url
+    }
+  }
+}
+`;
 export default class Dashboard extends Component {
   constructor(props) {
     super(props)
@@ -81,14 +95,20 @@ export default class Dashboard extends Component {
         <div className="py-5 album">
           <div className="container">
             <div className="row">
-              <PokeList
-                searchString={this.state.searchString}
-                handleSubmit={this.handleSubmit}
-                handleChange={this.handleChange}
-                pokemon={this.state.pokemon}
-                handleInputChange={this.handleInputChange}
-                error={this.state.error}
-              />
+              <Query query={POKEMONS_QUERY}>
+                {({ loading, error, data }) => {
+                  if (loading) return <p>Loading...</p>;
+                  if (error) return <p>Error :(</p>;
+                  return <PokeList
+                    searchString={this.state.searchString}
+                    handleSubmit={this.handleSubmit}
+                    handleChange={this.handleChange}
+                    pokemon={data.getAllPokemon.results}
+                    handleInputChange={this.handleInputChange}
+                    error={this.state.error}
+                  />
+                }}
+              </Query>
             </div>
           </div>
         </div>

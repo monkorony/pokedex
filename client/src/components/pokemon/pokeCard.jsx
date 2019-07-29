@@ -4,8 +4,6 @@ import { capitalizeFirstLetter, lpad, typeColors } from '../../services/pokemonS
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-
-
 export default class PokeCard extends Component {
   state = {
     name: '',
