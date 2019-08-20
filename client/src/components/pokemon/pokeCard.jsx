@@ -23,8 +23,6 @@ export default class PokeCard extends Component {
     const pokeType = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeIndex}`)
     console.log(pokeType.data.types, 'types')
     this.setState({ name, imageUrl, pokeIndex, type: pokeType.data.types })
-
-
   }
 
   pad(number, length) {

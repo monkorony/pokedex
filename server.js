@@ -8,7 +8,8 @@ const app = express();
 app.use(cors())
 
 server.applyMiddleware({
-  app
+  app,
+  path: "/"
 })
 
 app.use(express.static('public'));

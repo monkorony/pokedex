@@ -9,23 +9,7 @@ import { Query } from 'react-apollo';
 const POKEMON_QUERY = gql`
 query PokemonQuery($id: Int!) {
   getPokemonById(id: $id) {
-    id
     name
-    height
-    is_default
-    order
-    weight
-    abilities {
-      slot
-      is_hidden
-      ability {
-        name
-        url
-      }
-    }
-    
-    location_area_encounters
-    
   }
 }
 `;
@@ -178,7 +162,7 @@ export default class Pokemon extends Component {
   }
   render() {
     let { pokemonIndex } = this.props.match.params;
-    pokemonIndex = parseInt(pokemonIndex);
+
     const {
       name,
       abilities,
@@ -199,6 +183,7 @@ export default class Pokemon extends Component {
     return (
 
       <div className="container">
+
         <Query query={POKEMON_QUERY} variables={{ pokemonIndex }}>
           {
             ({ loading, error, data }) => {
