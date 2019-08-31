@@ -1,7 +1,11 @@
-
-.bg-light {
-  background: rgb(99,220,251);
-background: linear-gradient(180deg, rgba(99,220,251,1) 0%, rgba(99,220,251,1) 40%, rgba(89,192,87,1) 100%);
+.bg-light.header-img {
+  background: rgb(99, 220, 251);
+  background: linear-gradient(
+    180deg,
+    rgba(99, 220, 251, 1) 0%,
+    rgba(99, 220, 251, 1) 40%,
+    rgba(89, 192, 87, 1) 100%
+  );
 }
 a {
   color: #222;
@@ -22,10 +26,9 @@ li {
 }
 .new {
   list-style: unset;
-  padding-left: 40px; 
+  padding-left: 40px;
 }
 .new li {
   color: black;
   float: none;
-  
 }

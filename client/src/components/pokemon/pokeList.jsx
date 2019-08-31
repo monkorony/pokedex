@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
-import PokeCard from './pokeCard';
-import PokeSearchInput from './pokeSearch';
+import React, { Component } from "react";
+import PokeCard from "./pokeCard";
 
 class PokeList extends Component {
-
   render() {
-    const { searchString, handleSubmit, handleChange, pokemon, handleInputChange, error } = this.props;
+    const {
+      searchString,
+      handleSubmit,
+      handleChange,
+      pokemon,
+      handleInputChange,
+      error
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -17,12 +22,10 @@ class PokeList extends Component {
               key={pokemon.name}
             />
           ))
-        ) : (<h1>Pokemon cannot be found</h1>)
-
-        }
-
+        ) : (
+          <h1>Pokemon cannot be found</h1>
+        )}
       </React.Fragment>
-
     );
   }
 }

@@ -1,34 +1,43 @@
-import React, { Component } from 'react';
-import spinner from './charmeleonLoad.gif';
-import { capitalizeFirstLetter, lpad, typeColors } from '../../services/pokemonService'
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import spinner from "../images/charmeleonLoad.gif";
+import {
+  capitalizeFirstLetter,
+  lpad,
+  typeColors
+} from "../../services/pokemonService";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default class PokeCard extends Component {
   state = {
-    name: '',
-    imageUrl: '',
-    pokeIndex: '',
+    name: "",
+    imageUrl: "",
+    pokeIndex: "",
     type: [],
     imageLoading: true,
     tooManyRequests: false
-  }
+  };
 
   async componentDidMount() {
     const { name, url } = this.props;
     //console.log(url, 'url')
     const pokeIndex = url.split("/")[url.split("/").length - 2];
     //console.log(pokeIndex, 'pokeIndex')
-    const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${lpad(pokeIndex, 3)}.png`
-    const pokeType = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokeIndex}`)
-    console.log(pokeType.data.types, 'types')
-    this.setState({ name, imageUrl, pokeIndex, type: pokeType.data.types })
+    const imageUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${lpad(
+      pokeIndex,
+      3
+    )}.png`;
+    const pokeType = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/${pokeIndex}`
+    );
+    //console.log(pokeType.data.types, 'types')
+    this.setState({ name, imageUrl, pokeIndex, type: pokeType.data.types });
   }
 
   pad(number, length) {
-    var str = '' + number;
+    var str = "" + number;
     while (str.length < length) {
-      str = '0' + str;
+      str = "0" + str;
     }
     return str;
   }
@@ -41,34 +50,55 @@ export default class PokeCard extends Component {
 
     return (
       <div className="col-md-3 co-sm-6 mb-5">
-        <Link to={`pokemon/${this.state.pokeIndex}`}>
-          <div className="card mb-4 box-shadow">
-            {/* <div className="card-header"><h5 style={{ textAlign: 'center', marginBottom: '0' }}>{capitalizeFirstLetter(name)}</h5></div> */}
-            {imageLoading ? (
-              <React.Fragment>
-                <img src={spinner} className="card-img-top" style={{ backgroundColor: '#84d6f7', borderRadius: 'none', }} />
-              </React.Fragment>
-            ) : null}
-            <img
-              className="card-img-top mx-auto"
-              src={imageUrl}
-              alt="Pokemon"
-              onLoad={() => this.setState({ imageLoading: false })}
-              onError={() => this.setState({ tooManyRequests: true })}
-              style={imageLoading ? { display: 'none' } : { backgroundColor: '#84d6f7', border: '0', display: 'block' }}
-            />
+        <div className="card mb-4 box-shadow">
+          {/* <div className="card-header"><h5 style={{ textAlign: 'center', marginBottom: '0' }}>{capitalizeFirstLetter(name)}</h5></div> */}
+          {imageLoading ? (
+            <React.Fragment>
+              <img
+                src={spinner}
+                className="card-img-top"
+                style={{ backgroundColor: "#84d6f7", borderRadius: "none" }}
+              />
+            </React.Fragment>
+          ) : null}
+          <img
+            className="card-img-top mx-auto"
+            src={imageUrl}
+            alt="Pokemon"
+            onLoad={() => this.setState({ imageLoading: false })}
+            onError={() => this.setState({ tooManyRequests: true })}
+            style={
+              imageLoading
+                ? { display: "none" }
+                : {
+                    backgroundColor: "#84d6f7",
+                    border: "0",
+                    display: "block"
+                  }
+            }
+          />
 
-            <div className="card-body">
+          <div className="card-body">
+            <Link to={`pokemon/${this.state.pokeIndex}`}>
               <h5>{capitalizeFirstLetter(this.props.name)}</h5>
-              <ul>
-                {this.state.type.map(pokemonType => {
-                  return <li style={{ backgroundColor: `${typeColors[pokemonType.type.name]}` }} key={Math.random()}>{capitalizeFirstLetter(pokemonType.type.name)}</li>
-                })}
-              </ul>
-            </div>
+            </Link>
+            <ul>
+              {this.state.type.map(pokemonType => {
+                return (
+                  <li
+                    style={{
+                      backgroundColor: `${typeColors[pokemonType.type.name]}`
+                    }}
+                    key={Math.random()}
+                  >
+                    {capitalizeFirstLetter(pokemonType.type.name)}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </Link>
+        </div>
       </div>
-    )
+    );
   }
 }
