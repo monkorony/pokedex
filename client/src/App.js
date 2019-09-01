@@ -4,8 +4,9 @@ import React, { Component } from "react";
 import Navigation from "./components/navbar";
 import Dashboard from "./components/dashboard";
 import Pokemon from "./components/pokemon/pokemon";
-import PokemonSingle from "./components/pokemon/pokemonSingle";
 import Pokemons from "./components/pokemon/Pokemons";
+import Type from "./components/types/type";
+
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
@@ -24,8 +25,13 @@ class App extends Component {
             <Navigation />
             <Switch>
               <Route exact path="/" component={Dashboard} />
+              <Route exact path="/types/:typeName/" component={Type} />
               <Route exact path="/pokemons/" component={Pokemons} />
-              <Route exact path="/pokemon/:pokemonIndex/" component={Pokemon} />
+              <Route
+                exact
+                path="/pokemons/:pokemonIndex/"
+                component={Pokemon}
+              />
             </Switch>
           </div>
         </Router>

@@ -30,7 +30,7 @@ export default class PokeCard extends Component {
     const pokeType = await axios.get(
       `https://pokeapi.co/api/v2/pokemon/${pokeIndex}`
     );
-    //console.log(pokeType.data.types, 'types')
+    //console.log(pokeType.data.types, "types");
     this.setState({ name, imageUrl, pokeIndex, type: pokeType.data.types });
   }
 
@@ -79,7 +79,7 @@ export default class PokeCard extends Component {
           />
 
           <div className="card-body">
-            <Link to={`pokemon/${this.state.pokeIndex}`}>
+            <Link to={`/pokemons/${this.state.pokeIndex}`}>
               <h5>{capitalizeFirstLetter(this.props.name)}</h5>
             </Link>
             <ul>
@@ -91,7 +91,14 @@ export default class PokeCard extends Component {
                     }}
                     key={Math.random()}
                   >
-                    {capitalizeFirstLetter(pokemonType.type.name)}
+                    <Link
+                      to={`/types/${pokemonType.type.name}`}
+                      style={{
+                        color: `#fff`
+                      }}
+                    >
+                      {capitalizeFirstLetter(pokemonType.type.name)}
+                    </Link>
                   </li>
                 );
               })}
